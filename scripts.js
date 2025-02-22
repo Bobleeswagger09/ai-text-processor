@@ -61,30 +61,46 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Built-in summarizer error:", err);
     }
-    
+
     // Fallback: a simple frequency-based summarization
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
     if (sentences.length <= 1) return text; // Not enough to summarize
 
-    const stopWords = new Set(["the", "and", "a", "an", "of", "in", "to", "is", "it", "that", "this"]);
+    const stopWords = new Set([
+      "the",
+      "and",
+      "a",
+      "an",
+      "of",
+      "in",
+      "to",
+      "is",
+      "it",
+      "that",
+      "this",
+    ]);
     const words = text.toLowerCase().match(/\w+/g) || [];
     const freqMap = {};
-    words.forEach(word => {
+    words.forEach((word) => {
       if (!stopWords.has(word)) {
         freqMap[word] = (freqMap[word] || 0) + 1;
       }
     });
 
-    const sentenceScores = sentences.map(sentence => {
+    const sentenceScores = sentences.map((sentence) => {
       const sentenceWords = sentence.toLowerCase().match(/\w+/g) || [];
-      const score = sentenceWords.reduce((sum, word) => sum + (freqMap[word] || 0), 0);
+      const score = sentenceWords.reduce(
+        (sum, word) => sum + (freqMap[word] || 0),
+        0
+      );
       return { sentence, score };
     });
 
     sentenceScores.sort((a, b) => b.score - a.score);
-    const topSentences = sentenceScores.slice(0, 3)
+    const topSentences = sentenceScores
+      .slice(0, 3)
       .sort((a, b) => text.indexOf(a.sentence) - text.indexOf(b.sentence))
-      .map(item => item.sentence.trim());
+      .map((item) => item.sentence.trim());
 
     return topSentences.join(" ");
   };
@@ -147,7 +163,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const title = document.createElement("h3");
       title.textContent =
-        chat.input.length > 20 ? chat.input.substring(0, 20) + "..." : chat.input;
+        chat.input.length > 20
+          ? chat.input.substring(0, 20) + "..."
+          : chat.input;
       title.style.margin = "0 0 5px 0";
       title.style.fontSize = "1.1em";
 
@@ -223,7 +241,11 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
     try {
-      const translation = await translateText(inputText, targetLang, sourceLang);
+      const translation = await translateText(
+        inputText,
+        targetLang,
+        sourceLang
+      );
       outputTextElem.value = translation;
       saveChat(inputText, translation);
       loadChats();
@@ -238,25 +260,29 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // --- Improved Summarization Functionality ---
-  document.getElementById("summarize-btn").addEventListener("click", async () => {
-    const text = inputTextElem.value.trim();
-    if (!text) {
-      showNotification("Please enter your text.");
-      return;
-    }
-    if (text.length < 150) {
-      showNotification("Text must be more than 150 characters for summarization.");
-      return;
-    }
-    outputTextElem.value = "Summarizing...";
-    try {
-      const summary = await summarizeContent(text);
-      outputTextElem.value = summary;
-    } catch (error) {
-      console.error("Summarization error:", error);
-      outputTextElem.value = "An error occurred during summarization.";
-    }
-  });
+  document
+    .getElementById("summarize-btn")
+    .addEventListener("click", async () => {
+      const text = inputTextElem.value.trim();
+      if (!text) {
+        showNotification("Please enter your text.");
+        return;
+      }
+      if (text.length < 150) {
+        showNotification(
+          "Text must be more than 150 characters for summarization."
+        );
+        return;
+      }
+      outputTextElem.value = "Summarizing...";
+      try {
+        const summary = await summarizeContent(text);
+        outputTextElem.value = summary;
+      } catch (error) {
+        console.error("Summarization error:", error);
+        outputTextElem.value = "An error occurred during summarization.";
+      }
+    });
 
   // --- Dark Mode Persistence ---
   const darkModeToggle = document.getElementById("dark-mode-btn");
@@ -345,7 +371,9 @@ document.addEventListener("DOMContentLoaded", () => {
       try {
         const detectedLanguage = await detectLanguage(text);
         const selectedSpan = inputLanguageDropdown.querySelector(".selected");
-        const langObj = languages.find((lang) => lang.code === detectedLanguage);
+        const langObj = languages.find(
+          (lang) => lang.code === detectedLanguage
+        );
         selectedSpan.innerHTML = langObj ? langObj.name : detectedLanguage;
         selectedSpan.dataset.value = detectedLanguage;
       } catch (error) {

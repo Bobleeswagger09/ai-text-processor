@@ -1,7 +1,7 @@
 /* Root Variables & Scrollbar Styles */
 :root {
-  --primary-color: #4a9fed;
-  --bg-color: #f0ebf8;
+  --primary-color: #317163;
+  --bg-color: #f7f7f7;
   --light-bg-color: #fff;
   --text-color: #111116;
   --light-text-color: #cdccd1;
@@ -41,8 +41,8 @@ body {
 }
 
 body.dark {
-  --bg-color: #1f1f38;
-  --light-bg-color: #02001e;
+  --bg-color: #212121;
+  --light-bg-color: #303030;
   --text-color: #fff;
   --light-text-color: #58575c;
 }

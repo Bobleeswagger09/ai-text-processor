@@ -5,6 +5,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   async function detectLanguage(text) {
     try {
+      // Use Chrome's AI API if available.
       if (
         typeof chrome !== "undefined" &&
         chrome.ai &&
@@ -13,7 +14,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const response = await chrome.ai.languageDetection.detect(text);
         return response.language || "unknown";
       } else {
-        return /[а-яА-Я]/.test(text) ? "ru" : "en";
+        // Fallback: use Google Translate's unofficial detection endpoint.
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=en&dt=t&q=${encodeURIComponent(
+          text
+        )}`;
+        const res = await fetch(url);
+        const json = await res.json();
+        // The detected language code is typically the third element in the response.
+        return json[2] || "unknown";
       }
     } catch (error) {
       console.error("Language detection error:", error);
@@ -37,7 +45,7 @@ document.addEventListener("DOMContentLoaded", () => {
           );
         }
       }
-      // Fallback to Google Translate endpoint
+      // Fallback to Google Translate endpoint.
       const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLang}&tl=${targetLang}&dt=t&q=${encodeURIComponent(
         text
       )}`;
@@ -52,7 +60,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // --- Improved Summarization Function ---
   const summarizeContent = async (text) => {
-    // Try using the built-in summarizer first
     try {
       if (typeof chrome !== "undefined" && chrome.ai && chrome.ai.summarizer) {
         const response = await chrome.ai.summarizer.summarize(text);
@@ -61,11 +68,8 @@ document.addEventListener("DOMContentLoaded", () => {
     } catch (err) {
       console.error("Built-in summarizer error:", err);
     }
-
-    // Fallback: a simple frequency-based summarization
     const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [text];
-    if (sentences.length <= 1) return text; // Not enough to summarize
-
+    if (sentences.length <= 1) return text;
     const stopWords = new Set([
       "the",
       "and",
@@ -86,7 +90,6 @@ document.addEventListener("DOMContentLoaded", () => {
         freqMap[word] = (freqMap[word] || 0) + 1;
       }
     });
-
     const sentenceScores = sentences.map((sentence) => {
       const sentenceWords = sentence.toLowerCase().match(/\w+/g) || [];
       const score = sentenceWords.reduce(
@@ -95,13 +98,11 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       return { sentence, score };
     });
-
     sentenceScores.sort((a, b) => b.score - a.score);
     const topSentences = sentenceScores
       .slice(0, 3)
       .sort((a, b) => text.indexOf(a.sentence) - text.indexOf(b.sentence))
       .map((item) => item.sentence.trim());
-
     return topSentences.join(" ");
   };
 
@@ -110,30 +111,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const notification = document.createElement("div");
     notification.className = "notification";
     notification.textContent = message;
-
-    notification.style.position = "fixed";
-    notification.style.top = "20px";
-    notification.style.right = "20px";
-    notification.style.backgroundColor = "#356aff";
-    notification.style.color = "#fff";
-    notification.style.padding = "15px 20px";
-    notification.style.borderRadius = "5px";
-    notification.style.boxShadow = "0 2px 6px rgba(0,0,0,0.2)";
-    notification.style.opacity = "0";
-    notification.style.transition = "opacity 0.5s";
+    Object.assign(notification.style, {
+      position: "fixed",
+      top: "20px",
+      right: "20px",
+      backgroundColor: "#356aff",
+      color: "#fff",
+      padding: "15px 20px",
+      borderRadius: "5px",
+      boxShadow: "0 2px 6px rgba(0,0,0,0.2)",
+      opacity: "0",
+      transition: "opacity 0.5s",
+    });
     document.body.appendChild(notification);
-
-    // Fade in
-    setTimeout(() => {
-      notification.style.opacity = "1";
-    }, 100);
-
-    // Remove after 3 seconds
+    setTimeout(() => (notification.style.opacity = "1"), 100);
     setTimeout(() => {
       notification.style.opacity = "0";
-      setTimeout(() => {
-        notification.remove();
-      }, 500);
+      setTimeout(() => notification.remove(), 500);
     }, 3000);
   }
 
@@ -149,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
     localStorage.setItem("chats", JSON.stringify(chats));
   }
 
-  // Create neatly formatted chat entries.
   function loadChats() {
     const chats = JSON.parse(localStorage.getItem("chats")) || [];
     const chatList = document.getElementById("chat-list");
@@ -160,7 +153,6 @@ document.addEventListener("DOMContentLoaded", () => {
       li.style.marginBottom = "10px";
       li.style.borderBottom = "1px solid #ccc";
       li.style.cursor = "pointer";
-
       const title = document.createElement("h3");
       title.textContent =
         chat.input.length > 20
@@ -168,7 +160,6 @@ document.addEventListener("DOMContentLoaded", () => {
           : chat.input;
       title.style.margin = "0 0 5px 0";
       title.style.fontSize = "1.1em";
-
       const dateOptions = {
         weekday: "short",
         year: "numeric",
@@ -184,15 +175,12 @@ document.addEventListener("DOMContentLoaded", () => {
       );
       dateSpan.style.fontSize = "0.9em";
       dateSpan.style.color = "#666";
-
       li.appendChild(title);
       li.appendChild(dateSpan);
-
       li.addEventListener("click", () => {
         inputTextElem.value = chat.input;
         outputTextElem.value = chat.output;
       });
-
       chatList.appendChild(li);
     });
   }

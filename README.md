@@ -1,94 +1,68 @@
 # AI Language Translator Web App
 
-A web-based tool that provides translation and summarization capabilities with a clean, responsive interface. This project enables users to translate text between multiple languages, automatically detect the input language, generate summaries for longer texts, and review previous chats—all while offering a sleek dark mode experience.
+A powerful web-based tool designed for seamless text translation and summarization with an intuitive and modern user experience. This app supports multiple languages, automatic language detection, chat history, and a stylish dark mode for better readability.
 
-## Features
+## 🚀 Key Features
 
-- **Auto Language Detection:** Automatically detects the language of the input text using either a built-in API or a simple regex fallback.
-- **Translation:** Translates text from the source language to the target language via a built-in API or, if unavailable, through Google Translate.
-- **Summarization:** Provides a quick summarization of longer texts (over 150 characters) using either a built-in summarizer API or a basic slicing method.
-- **Chat History:** Saves previous translations to local storage, which can be viewed in the chat sidebar and reloaded with a click.
-- **Dark Mode Toggle:** Allows users to switch between light and dark themes with persistent settings.
-- **Responsive Design:** Optimized layout for both desktop and mobile devices.
-- **Swap Functionality:** Easily swap the source and target languages along with their corresponding text.
+- **Automatic Language Detection** – Instantly identifies the input language before translating.
+- **Multi-Language Translation** – Easily translates text between multiple languages using an integrated API.
+- **Text Summarization** – Condenses lengthy texts (over 150 characters) into concise summaries.
+- **Chat History** – Stores past translations in local storage for quick reference.
+- **Dark Mode Toggle** – Provides an eye-friendly interface with a light/dark theme switch.
+- **Responsive UI** – Ensures smooth usability across desktop and mobile devices.
+- **Quick Swap** – Swap the source and target languages along with their text in one click.
 
-## Installation
+## 🛠️ Installation & Setup
 
-1. **Clone the Repository:**
-
+1. **Clone the Repository**
    ```bash
    git clone https://github.com/Niz46/ai-text-processor.git
    ```
-
-2. **Navigate to the Project Directory:**
-
+2. **Navigate to the Project Directory**
    ```bash
-   cd LanguageTranslator
+   cd ai-text-processor
    ```
-
-3. **Open the Application:**
-
-   Open `index.html` in your favorite browser. For a local server experience, you can use:
-
+3. **Run the Application**
+   Open `index.html` in a web browser or start a local server with:
    ```bash
    npx serve .
    ```
 
-## File Structure
+## 📂 Project Structure
 
-``` ai-text-processor/
-├── index.html         # Main HTML file for the web application.
-├── style.css          # CSS file for styling and responsive design.
-├── scripts.js         # JavaScript file handling translation, summarization, chat storage, and UI interactions.
-└── images/            # Directory containing images (icons, bot image, etc.)
+```plaintext
+ai-text-processor/
+├── index.html      # Main entry point of the web app
+├── style.css       # Styling and responsiveness
+├── scripts.js      # Core functionality for translation, summarization, and UI
+└── images/         # Icons and graphics
 ```
 
-## Usage
+## 📖 How to Use
 
-1. **Input Text:**  
-   Enter the text you wish to translate or summarize in the input area.
+1. **Enter Text** – Type or paste the text you want to translate or summarize.
+2. **Choose Languages** – Select a source and target language (or use auto-detect).
+3. **Translate** – Click the **Translate** button to generate the translated output.
+4. **Summarize** – If your text is long, click **Summarize** for a concise version.
+5. **Chat History** – Access and reload previous translations from the chat sidebar.
+6. **Dark Mode** – Toggle the theme using the dark mode switch.
+7. **Swap Languages** – Use the swap button to exchange input and output languages instantly.
 
-2. **Select Languages:**  
-   - Use the "From" dropdown to set the source language (or choose "Auto Detect" to have the language automatically determined).
-   - Use the "To" dropdown to select the target language for translation.
+## 🔧 Technologies Used
 
-3. **Translate:**  
-   Click the **Translate** button to process your text. The translated text will appear in the output area, and the chat history will be updated.
+- **HTML5** – Structuring the interface
+- **CSS3** – Styling and making the UI responsive
+- **JavaScript** – Implementing core functionalities like translation and summarization
+- **Ionicons** – Providing modern UI icons
 
-4. **Summarize:**  
-   If the input text exceeds 150 characters, click the **Summarize** button to generate a brief summary.
+## 🔮 Future Enhancements
 
-5. **Chat Sidebar:**  
-   - Access previous translations in the sidebar.
-   - Click any chat entry to reload its content.
-   - Use the **Clear Chats** button to remove all saved entries.
+- **More API Integrations** – Support for additional translation & summarization services.
+- **Enhanced Error Handling** – Better feedback for network issues and invalid inputs.
+- **Extended Language Support** – Expanding the range of supported languages.
+- **User Preferences** – Custom settings for themes, text styles, and default languages.
 
-6. **Dark Mode:**  
-   Toggle the dark mode switch at the bottom right of the screen to switch between light and dark themes. The preference is saved across sessions.
+## 📜 License
 
-7. **Swap Languages:**  
-   Click the swap button to quickly exchange the selected source and target languages along with their corresponding text.
+This project is open-source under the **GNU General Public License v3.0 (GPL-3.0)**. View the full license details [here](https://www.gnu.org/licenses/gpl-3.0.html).
 
-## Technologies Used
-
-- **HTML5:** For semantic page structure.
-- **CSS3:** For styling and responsive design.
-- **JavaScript:** To implement translation, summarization, language detection, and local storage functionalities.
-- **Ionicons:** For a modern icon set that enhances the user interface.
-
-## Future Enhancements
-
-- **Advanced API Integrations:** Incorporate more robust translation and summarization APIs.
-- **Improved Error Handling:** Enhance error messages and notifications for a better user experience.
-- **Extended Language Support:** Add additional languages and dialects.
-- **User Customizations:** Enable more user settings, such as custom themes and text formatting options.
-
-## License
-
-This project is licensed under the GNU General Public License v3.0 (GPL-3.0).  
-For more details, please see the [GPL-3.0 License](https://www.gnu.org/licenses/gpl-3.0.html) or refer to the LICENSE file included in the repository.
-
-## Acknowledgements
-
-- **Ionicons:** For the beautiful and scalable icons used throughout the interface.
-- **Inspiration:** This project draws inspiration from modern translation and chat applications, aiming to combine utility with an engaging user experience.

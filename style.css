@@ -41,8 +41,8 @@ body {
 }
 
 body.dark {
-  --bg-color: #212121;
-  --light-bg-color: #303030;
+  --bg-color: #010409;
+  --light-bg-color: #0d1017;
   --text-color: #fff;
   --light-text-color: #58575c;
 }

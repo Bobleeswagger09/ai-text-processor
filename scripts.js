@@ -1,8 +1,6 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // --- Helper Functions ---
-
   async function detectLanguage(text) {
     try {
       // Use Chrome's AI API if available.
@@ -58,7 +56,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // --- Improved Summarization Function ---
   const summarizeContent = async (text) => {
     try {
       if (typeof chrome !== "undefined" && chrome.ai && chrome.ai.summarizer) {
@@ -106,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
     return topSentences.join(" ");
   };
 
-  // Show a notification message on the screen.
   function showNotification(message) {
     const notification = document.createElement("div");
     notification.className = "notification";
